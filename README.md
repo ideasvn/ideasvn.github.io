@@ -6,5 +6,7 @@
 
 - https://github.com/Zizaco/entrust Auth
 
---- Public ngrok với virtual hosts
+* Public ngrok với virtual hosts
+```bash
 ngrok http -host-header=ideasvn.dev 80
+```
