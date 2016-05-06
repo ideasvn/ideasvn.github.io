@@ -9,10 +9,18 @@ var copy = require('gulp-copy');
 var config = {
     coreJs: [
         './node_modules/jquery/dist/jquery.js',
+        './node_modules/icheck/icheck.js',
         './node_modules/bootstrap-sass/assets/javascripts/bootstrap.js',
-        './node_modules/angular/angular.js'
+        './node_modules/angular/angular.js',
+        './node_modules/lodash/lodash.js',
     ],
-    appJs: [],
+    appJs: [
+        './apps/apps.js',
+        './apps/configs.js',
+        './apps/directives.js',
+        './apps/filters.js',
+        './apps/**/*.js'
+    ],
     coreCss: [],
     appCss:[
         './sass/core.scss',
@@ -27,12 +35,22 @@ var config = {
     ],
     copyViews: [
         './apps/**/*.html'
+    ],
+    copyIndex: [
+        './apps/index.html'
     ]
 };
 
 gulp.task('coreJs', function() {
     return gulp.src(config.coreJs)
         .pipe(concat('core.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('./public/assets/js'));
+});
+
+gulp.task('appJs', function() {
+    return gulp.src(config.appJs)
+        .pipe(concat('app.js'))
         .pipe(uglify())
         .pipe(gulp.dest('./public/assets/js'));
 });
@@ -58,4 +76,9 @@ gulp.task('copyViews', function () {
         .pipe(gulp.dest('./public/views'));
 });
 
-gulp.task('default', ['coreJs', 'sass', 'copyImg', 'copyFonts', 'copyViews']);
+gulp.task('copyIndex', function () {
+    return gulp.src(config.copyIndex)
+        .pipe(gulp.dest('./public'));
+});
+
+gulp.task('default', ['coreJs', 'appJs', 'sass', 'copyImg', 'copyFonts', 'copyViews', 'copyIndex']);

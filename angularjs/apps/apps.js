@@ -1,3 +1,1 @@
-/**
- * Created by tuannda on 06/05/2016.
- */
+angular.module('app', ['app.configs', 'app.directives', 'app.filters']);
